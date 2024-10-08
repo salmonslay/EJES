@@ -10,14 +10,16 @@ public class MinigameTripleServe : Minigame
     [SerializeField] private GameObject player;
 
     [SerializeField] public Sprite[] _foodItemsSprites;
-    [SerializeField] public string[] _foodItemsNames; //ska vara i samma ordning some "_foodItems"
+    [SerializeField] public string[] _foodItemsNames; //ska vara i samma ordning some "_foodItemsSprites" och
 
     [SerializeField] private AudioClip _pickUpSound;
     [SerializeField] private AudioClip _placeDownSound;
     
     [SerializeField] private Vector3[] areaOfPlayPos;
     [SerializeField] private Vector3[] customerPos;
-    [SerializeField] private Vector3[] foodItemPos;
+    [SerializeField] private TripleServe_ItemClass[] foodItems;
+
+    [SerializeField] private int stepDistanceMultiplyer = 1;
 
     private Vector3 origPos, targetPos;
 
@@ -25,14 +27,12 @@ public class MinigameTripleServe : Minigame
     private bool isHoldingItem;
     private float timeToMove = 0.2f;
 
+    private TripleServe_ItemClass currentItem; 
+
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 1; i < foodItemPos.Length; i++)
-        {
-            int itemIndex = Random.Range(0, 3);
-            
-        }
+
     }
 
 
@@ -41,18 +41,37 @@ public class MinigameTripleServe : Minigame
     {
         if (!isMoving)
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow) && CanMove(Vector3.left + origPos))
-                StartCoroutine(MovePlayer(Vector3.left));
+            if (Input.GetKeyDown(KeyCode.LeftArrow) && CanMove((Vector3.left * stepDistanceMultiplyer) + origPos))
+                StartCoroutine(MovePlayer(Vector3.left * stepDistanceMultiplyer));
 
-            if (Input.GetKeyDown(KeyCode.UpArrow) && CanMove(Vector3.up + origPos))
-                StartCoroutine(MovePlayer(Vector3.up));
+            if (Input.GetKeyDown(KeyCode.UpArrow) && CanMove((Vector3.up * stepDistanceMultiplyer) + origPos))
+                StartCoroutine(MovePlayer(Vector3.up * stepDistanceMultiplyer));
 
-            if (Input.GetKeyDown(KeyCode.RightArrow) && CanMove(Vector3.right + origPos))
-                StartCoroutine(MovePlayer(Vector3.right));
+            if (Input.GetKeyDown(KeyCode.RightArrow) && CanMove((Vector3.right * stepDistanceMultiplyer) + origPos))
+                StartCoroutine(MovePlayer(Vector3.right * stepDistanceMultiplyer));
 
-            if (Input.GetKeyDown(KeyCode.DownArrow) && CanMove(Vector3.down + origPos))
-                StartCoroutine(MovePlayer(Vector3.down));
+            if (Input.GetKeyDown(KeyCode.DownArrow) && CanMove((Vector3.down * stepDistanceMultiplyer) + origPos))
+                StartCoroutine(MovePlayer(Vector3.down * stepDistanceMultiplyer));
         }
+
+        if (!isHoldingItem) 
+        {
+            if (IsAtItem())
+            {
+                PickUpItem(player.transform.position);
+            }
+        }
+
+        if (isHoldingItem)
+        {
+            if (IsAtCustomer())
+            {
+                GiveItem();
+            }
+        }
+
+            
+
     }
 
 
@@ -103,11 +122,48 @@ public class MinigameTripleServe : Minigame
 
     private void PickUpItem(Vector3 itemPos)
     {
-        if (!isHoldingItem)
+        isHoldingItem = true;
+        
+        for (int i = 0; i < foodItems.Length; i++)
         {
-            isHoldingItem = true;
-            
+            if (itemPos == foodItems[i].GetItemPosition())
+            {
+                currentItem = foodItems[i];
+                break;
+            }
         }
+
+
+    }
+
+    private bool IsAtItem()
+    {
+        for(int i = 0; i < foodItems.Length; i++)
+        {
+            if(player.transform.position == foodItems[i].GetItemPosition())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool IsAtCustomer() //need to edit later
+    {
+        for (int i = 0; i < foodItems.Length; i++)
+        {
+            if (player.transform.position == foodItems[i].GetItemPosition())
+            {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    private void GiveItem()
+    {
+
     }
 
 

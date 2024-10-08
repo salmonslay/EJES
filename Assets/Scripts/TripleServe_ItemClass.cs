@@ -25,6 +25,7 @@ public class TripleServe_ItemClass : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isTaken = false;
         gameObject.transform.position = itemPosition;
         int itemIndex = Random.Range(0, 3);
         itemSprite = mg._foodItemsSprites[itemIndex];
@@ -39,6 +40,14 @@ public class TripleServe_ItemClass : MonoBehaviour
         
     }
 
-    
+    public string GetItemName()
+    {
+        return itemName;
+    }
+
+    public Vector3 GetItemPosition()
+    {
+        return itemPosition;
+    }
 
 }

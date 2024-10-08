@@ -18,6 +18,7 @@ public class MinigameTripleServe : Minigame
     private bool isHoldingItem;
     private float timeToMove = 0.2f;
 
+
     private Vector3 origPos, targetPos;
     private Vector3[] outOfBoundsPos;
     private Vector3[] customerPos;

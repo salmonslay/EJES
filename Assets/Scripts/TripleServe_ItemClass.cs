@@ -27,7 +27,7 @@ public class TripleServe_ItemClass : MonoBehaviour
     {
         isTaken = false;
         gameObject.transform.position = itemPosition;
-        int itemIndex = Random.Range(0, 3);
+        int itemIndex = Random.Range(0, 3); //instead of a random item at all 3 spots, have one of each item at each spot getting positions from an array instead
         itemSprite = mg._foodItemsSprites[itemIndex];
         itemName = mg._foodItemsNames[itemIndex];
         GetComponent<SpriteRenderer>().sprite = itemSprite;

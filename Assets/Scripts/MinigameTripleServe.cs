@@ -16,8 +16,9 @@ public class MinigameTripleServe : Minigame
     [SerializeField] private AudioClip _placeDownSound;
     
     [SerializeField] private Vector3[] areaOfPlayPos;
-    [SerializeField] private Vector3[] customerPos;
+    //[SerializeField] private Vector3[] customerPos;
     [SerializeField] private TripleServe_ItemClass[] foodItems;
+    [SerializeField] private TripleServeCustomerClass[] customers;
 
     [SerializeField] private int stepDistanceMultiplyer = 1;
 
@@ -66,7 +67,7 @@ public class MinigameTripleServe : Minigame
         {
             if (IsAtCustomer())
             {
-                GiveItem();
+                GiveItem(player.transform.position);
             }
         }
 
@@ -148,11 +149,14 @@ public class MinigameTripleServe : Minigame
         return false;
     }
 
+    //maybe make the "IsAtCustomer" method a bool variable and handle return the customer order info instead
+    //same can be done for the items
+
     private bool IsAtCustomer() //need to edit later
     {
-        for (int i = 0; i < foodItems.Length; i++)
+        for (int i = 0; i < customers.Length; i++)
         {
-            if (player.transform.position == foodItems[i].GetItemPosition())
+            if (player.transform.position == customers[i].GetItemPosition())
             {
                 return true;
             }
@@ -161,9 +165,16 @@ public class MinigameTripleServe : Minigame
 
     }
 
-    private void GiveItem()
+    private void GiveItem(Vector3 customerPos)
     {
-
+        for (int i = 0; i < foodItems.Length; i++)
+        {
+            if (customerPos == foodItems[i].GetItemPosition())
+            {
+                currentItem = foodItems[i];
+                break;
+            }
+        }
     }
 
 

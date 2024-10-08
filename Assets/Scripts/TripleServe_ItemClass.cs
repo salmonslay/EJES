@@ -9,27 +9,41 @@ public class TripleServe_ItemClass : MonoBehaviour
     [SerializeField] private Vector3 itemPosition;
     [SerializeField] private MinigameTripleServe mg;
 
-    private Sprite itemSprite;
-    private string itemName;
+    [SerializeField] private int ARRAY_INDEX_CONSTANT;
 
+    private Sprite coffeeSprite, cakeSprite, breadSprite;
+    private string itemName;
     private bool isTaken;
 
-    /*public TripleServe_ItemClass(string name, Sprite sprite, Vector3 pos)
-    {
-        gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
-        itemName = name;
-        itemPosition = pos;
-    }*/
+    private Sprite itemSprite;
 
 
     // Start is called before the first frame update
     void Start()
     {
+
         isTaken = false;
         gameObject.transform.position = itemPosition;
-        int itemIndex = Random.Range(0, 3); //instead of a random item at all 3 spots, have one of each item at each spot getting positions from an array instead
-        itemSprite = mg._foodItemsSprites[itemIndex];
-        itemName = mg._foodItemsNames[itemIndex];
+
+        //instead of a random item at all 3 spots, have one of each item at each spot getting positions from an array instead
+
+        itemName = mg.GetVariationArray()[ARRAY_INDEX_CONSTANT];
+
+        
+
+        if (itemName == "coffee")
+        {
+            itemSprite = coffeeSprite;
+        }
+        if (itemName == "cake")
+        {
+            itemSprite = cakeSprite;
+        }
+        if(itemName == "bread")
+        {
+            itemSprite = breadSprite;
+        }
+
         GetComponent<SpriteRenderer>().sprite = itemSprite;
 
     }

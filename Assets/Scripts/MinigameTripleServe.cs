@@ -28,11 +28,28 @@ public class MinigameTripleServe : Minigame
     private bool isHoldingItem;
     private float timeToMove = 0.2f;
 
-    private TripleServe_ItemClass currentItem; 
+    private string currentItemHeld;
+
+    private List<string[]> listOfFoodVariations = new List<string[]>();
+    private string[] chosenVariation;
 
     // Start is called before the first frame update
     void Start()
     {
+
+        string[] variationOne = new string[3] { "coffee", "bread", "cake" };
+        string[] variationTwo = new string[3] { "bread", "cake", "coffee" };
+        string[] variationThree = new string[3] { "cake", "coffee", "bread" };
+
+        listOfFoodVariations.Add(variationOne);
+        listOfFoodVariations.Add(variationTwo);
+        listOfFoodVariations.Add(variationThree);
+
+        int itemIndex = Random.Range(0, 2);
+
+        chosenVariation = listOfFoodVariations[itemIndex];
+
+        currentItemHeld = "none";
 
     }
 
@@ -70,9 +87,6 @@ public class MinigameTripleServe : Minigame
                 GiveItem(player.transform.position);
             }
         }
-
-            
-
     }
 
 
@@ -129,7 +143,7 @@ public class MinigameTripleServe : Minigame
         {
             if (itemPos == foodItems[i].GetItemPosition())
             {
-                currentItem = foodItems[i];
+                currentItemHeld = foodItems[i].GetItemName();
                 break;
             }
         }
@@ -171,14 +185,16 @@ public class MinigameTripleServe : Minigame
         {
             if (customerPos == foodItems[i].GetItemPosition())
             {
-                currentItem = foodItems[i];
+                currentItemHeld = foodItems[i].GetItemName();
                 break;
             }
         }
     }
 
-
-
+    public string[] GetVariationArray()
+    {
+        return chosenVariation;
+    }
 
 
 }

@@ -22,7 +22,7 @@ public class TripleServeCustomerClass : MonoBehaviour
     void Start()
     {
         isServed = false;
-        int itemIndex = Random.Range(0, 3);
+        int itemIndex = Random.Range(0, 2);
         orderSprite = mg._foodItemsSprites[itemIndex];
         orderName = mg._foodItemsNames[itemIndex];
         GetComponent<SpriteRenderer>().sprite = orderSprite;
@@ -34,6 +34,7 @@ public class TripleServeCustomerClass : MonoBehaviour
         if (isServed && loopCheck < 1)
         {
             GetComponent<SpriteRenderer>().sprite = servedCustomer;
+            loopCheck++;
         }
     }
 

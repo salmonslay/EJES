@@ -15,7 +15,7 @@ public abstract class Minigame : MonoBehaviour
     public bool IsFinished { get; protected set; } = false;
     protected Timer Timer;
 
-    protected string MinigameName { get; } = "Minigame";
+    protected virtual string MinigameName { get; } = "Minigame";
 
     protected virtual void Start()
     {

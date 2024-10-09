@@ -89,7 +89,7 @@ public class MinigameTripleServe : Minigame
                 IsAtItem();
                 if (isAtItem)
                 {
-                    PickUpItem(player.transform.position);
+                    PickUpItem(player.transform.localPosition);
                 }
             }
 
@@ -98,7 +98,7 @@ public class MinigameTripleServe : Minigame
                 IsAtCustomer();
                 if (isAtCustomer)
                 {
-                    GiveItem(player.transform.position);
+                    GiveItem(player.transform.localPosition);
                 }
             }
         }      
@@ -112,17 +112,17 @@ public class MinigameTripleServe : Minigame
 
             float elapsedTime = 0;
 
-            origPos = player.transform.position;
+            origPos = player.transform.localPosition;
             targetPos = origPos + direction;
 
             while (elapsedTime < timeToMove)
             {
-                player.transform.position = Vector3.Lerp(origPos, targetPos, (elapsedTime / timeToMove));
+                player.transform.localPosition = Vector3.Lerp(origPos, targetPos, (elapsedTime / timeToMove));
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
 
-            player.transform.position = targetPos;
+            player.transform.localPosition = targetPos;
 
             isMoving = false;
     }
@@ -168,7 +168,7 @@ public class MinigameTripleServe : Minigame
     {
         for(int i = 0; i < foodItems.Count; i++)
         {
-            if(player.transform.position == foodItems[i].GetItemPosition())
+            if(player.transform.localPosition == foodItems[i].GetItemPosition())
             {
                 isAtItem = true;
             }
@@ -201,7 +201,7 @@ public class MinigameTripleServe : Minigame
     {
         for (int i = 0; i < customers.Count; i++)
         {
-            if (player.transform.position == customers[i].GetCustomerPosition())
+            if (player.transform.localPosition == customers[i].GetCustomerPosition())
             {
                 isAtCustomer = true;
             }

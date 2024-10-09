@@ -23,6 +23,9 @@ public class TripleServeCustomerClass : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        gameObject.transform.localPosition = customerPosition;
+
         isServed = false;
         int itemIndex = Random.Range(0, 2);
         orderSprite = mg._foodItemsSprites[itemIndex];

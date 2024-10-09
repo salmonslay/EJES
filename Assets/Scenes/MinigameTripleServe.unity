@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 1754405353}
   - component: {fileID: 1754405352}
   - component: {fileID: 1754405351}
+  - component: {fileID: 1754405355}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -223,6 +224,30 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1754405355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754405350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc858c955d8866d4081f445c4b1bdec8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _music: {fileID: 0}
+  _maxVolume: 0.5
+  TargetMusicVolume: 0
+  player: {fileID: 0}
+  _foodItemsSprites: []
+  _foodItemsNames: []
+  _pickUpSound: {fileID: 0}
+  _placeDownSound: {fileID: 0}
+  areaOfPlayPos: []
+  _foodItems: []
+  _customers: []
+  stepDistanceMultiplyer: 1
 --- !u!1 &1778729564
 GameObject:
   m_ObjectHideFlags: 0

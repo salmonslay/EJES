@@ -20,7 +20,7 @@ public class TripleServe_ItemClass : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.transform.position = itemPosition;
+        gameObject.transform.localPosition = itemPosition;
 
         //instead of a random item at all 3 spots, have one of each item at each spot getting positions from an array instead
 

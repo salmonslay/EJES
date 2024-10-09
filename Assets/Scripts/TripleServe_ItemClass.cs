@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.U2D;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class TripleServe_ItemClass : MonoBehaviour
@@ -11,7 +12,7 @@ public class TripleServe_ItemClass : MonoBehaviour
 
     [SerializeField] private int ARRAY_INDEX_CONSTANT;
 
-    private Sprite coffeeSprite, cakeSprite, breadSprite;
+    [SerializeField] private Sprite coffeeSprite, cakeSprite, breadSprite;
     private string itemName;
 
     private Sprite itemSprite;
@@ -20,11 +21,16 @@ public class TripleServe_ItemClass : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        mg = gameObject.GetComponentInParent<MinigameTripleServe>();
+
         gameObject.transform.localPosition = itemPosition;
 
         //instead of a random item at all 3 spots, have one of each item at each spot getting positions from an array instead
 
-        itemName = mg.GetVariationArray()[ARRAY_INDEX_CONSTANT];
+        string[] itemArray = mg.GetVariationArray();
+
+        //itemName = itemArray[ARRAY_INDEX_CONSTANT];
 
         
 
@@ -41,7 +47,7 @@ public class TripleServe_ItemClass : MonoBehaviour
             itemSprite = breadSprite;
         }
 
-        GetComponent<SpriteRenderer>().sprite = itemSprite;
+        GetComponent<Image>().sprite = itemSprite;
 
     }
 

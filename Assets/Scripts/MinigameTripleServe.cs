@@ -55,11 +55,11 @@ public class MinigameTripleServe : Minigame
 
         for (int i = 0; i < _foodItems.Count; i++)
         {
-            foodItems.Add(_foodItems[i].GetComponent<TripleServe_ItemClass>());
+            //foodItems.Add(_foodItems[i].GetComponent<TripleServe_ItemClass>());
         }
         for (int i = 0; i < _customers.Count; i++)
         {
-            customers.Add(_customers[i].GetComponent<TripleServeCustomerClass>());
+            //customers.Add(_customers[i].GetComponent<TripleServeCustomerClass>());
         }
 
         currentItemHeld = "none";
@@ -86,7 +86,7 @@ public class MinigameTripleServe : Minigame
             
             if (!isHoldingItem)
             {
-                IsAtItem();
+                //IsAtItem();
                 if (isAtItem)
                 {
                     PickUpItem(player.transform.localPosition);

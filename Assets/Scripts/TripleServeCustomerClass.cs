@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TripleServeCustomerClass : MonoBehaviour
 {
 
     [SerializeField] private Vector3 customerPosition;
     [SerializeField] private MinigameTripleServe mg;
-    [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private Sprite[] statusSprite;
-    [SerializeField] private GameObject statusSpriteRenderer;
+    //[SerializeField] private Sprite spriteRenderer;
+    //[SerializeField] private Sprite[] statusSprite;
+    [SerializeField] private GameObject statusImageObject;
 
     private Sprite customerSprite;
     private Sprite orderSprite;
@@ -24,14 +25,16 @@ public class TripleServeCustomerClass : MonoBehaviour
     void Start()
     {
 
+        mg = gameObject.GetComponentInParent<MinigameTripleServe>();
+
         gameObject.transform.localPosition = customerPosition;
 
         isServed = false;
-        int itemIndex = Random.Range(0, 2);
+        int itemIndex = Random.Range(0, 3);
         orderSprite = mg._foodItemsSprites[itemIndex];
         orderName = mg._foodItemsNames[itemIndex];
-        spriteRenderer.sprite = customerSprite;
-        statusSpriteRenderer.gameObject.GetComponent<SpriteRenderer>().sprite = orderSprite;
+        GetComponent<Image>().sprite = customerSprite;
+        statusImageObject.gameObject.GetComponent<Image>().sprite = orderSprite;
     }
 
     // Update is called once per frame
@@ -39,7 +42,7 @@ public class TripleServeCustomerClass : MonoBehaviour
     {
         if (isServed && loopCheck < 1)
         {
-            statusSpriteRenderer.gameObject.GetComponent<SpriteRenderer>().sprite = mg._foodItemsSprites[3];
+            statusImageObject.gameObject.GetComponent<Image>().sprite = mg._foodItemsSprites[3];
             loopCheck++;
         }
     }

@@ -383,6 +383,7 @@ MonoBehaviour:
   customerPosition: {x: 300, y: 300, z: 0}
   mg: {fileID: 0}
   statusImageObject: {fileID: 1473219110}
+  checkMark: {fileID: 21300000, guid: 6df537baf4c76c347b882dcdfb82276a, type: 3}
 --- !u!1 &930620761
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,6 +476,7 @@ MonoBehaviour:
   customerPosition: {x: 0, y: 300, z: 0}
   mg: {fileID: 0}
   statusImageObject: {fileID: 855961336}
+  checkMark: {fileID: 21300000, guid: 6df537baf4c76c347b882dcdfb82276a, type: 3}
 --- !u!1 &1007152299
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,6 +569,7 @@ MonoBehaviour:
   customerPosition: {x: -300, y: 300, z: 0}
   mg: {fileID: 0}
   statusImageObject: {fileID: 1735600758}
+  checkMark: {fileID: 21300000, guid: 6df537baf4c76c347b882dcdfb82276a, type: 3}
 --- !u!1 &1193905062
 GameObject:
   m_ObjectHideFlags: 0
@@ -1433,6 +1436,87 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1001 &1926024248
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2973475934355271372, guid: a42163fb520b90d49b78ae29dc97cd23, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 666.66296
+      objectReference: {fileID: 0}
+    - target: {fileID: 2973475934355271372, guid: a42163fb520b90d49b78ae29dc97cd23, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 507.94257
+      objectReference: {fileID: 0}
+    - target: {fileID: 2973475934355271372, guid: a42163fb520b90d49b78ae29dc97cd23, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 321.14163
+      objectReference: {fileID: 0}
+    - target: {fileID: 2973475934355271372, guid: a42163fb520b90d49b78ae29dc97cd23, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2973475934355271372, guid: a42163fb520b90d49b78ae29dc97cd23, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2973475934355271372, guid: a42163fb520b90d49b78ae29dc97cd23, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2973475934355271372, guid: a42163fb520b90d49b78ae29dc97cd23, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2973475934355271372, guid: a42163fb520b90d49b78ae29dc97cd23, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2973475934355271372, guid: a42163fb520b90d49b78ae29dc97cd23, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2973475934355271372, guid: a42163fb520b90d49b78ae29dc97cd23, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243895067894913178, guid: a42163fb520b90d49b78ae29dc97cd23, type: 3}
+      propertyPath: _isDebugManager
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243895067894913178, guid: a42163fb520b90d49b78ae29dc97cd23, type: 3}
+      propertyPath: _minigameSceneNames.Array.data[0]
+      value: MinigameTripleServe
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243895067894913178, guid: a42163fb520b90d49b78ae29dc97cd23, type: 3}
+      propertyPath: _minigameSceneNames.Array.data[1]
+      value: MinigameTripleServe
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243895067894913178, guid: a42163fb520b90d49b78ae29dc97cd23, type: 3}
+      propertyPath: _minigameSceneNames.Array.data[2]
+      value: MinigameTripleServe
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243895067894913178, guid: a42163fb520b90d49b78ae29dc97cd23, type: 3}
+      propertyPath: _minigameSceneNames.Array.data[3]
+      value: MinigameTripleServe
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243895067894913178, guid: a42163fb520b90d49b78ae29dc97cd23, type: 3}
+      propertyPath: _minigameSceneNames.Array.data[4]
+      value: MinigameTripleServe
+      objectReference: {fileID: 0}
+    - target: {fileID: 8890187649691490226, guid: a42163fb520b90d49b78ae29dc97cd23, type: 3}
+      propertyPath: m_Name
+      value: manager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a42163fb520b90d49b78ae29dc97cd23, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1442,3 +1526,4 @@ SceneRoots:
   - {fileID: 1828556573}
   - {fileID: 1778729567}
   - {fileID: 1754405354}
+  - {fileID: 1926024248}

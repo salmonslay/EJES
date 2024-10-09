@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class MinigameTripleServe : Minigame
 {
     protected override float MinigameTime => GameManager.Instance ? GameManager.Instance.MinigameTime * 0.7f : 5f;
-    protected override string MinigameName => "Eat kanelbulle";
+    protected override string MinigameName => "Serve your guests";
 
     [SerializeField] private GameObject player;
 
@@ -14,13 +15,13 @@ public class MinigameTripleServe : Minigame
 
     [SerializeField] private AudioClip _pickUpSound;
     [SerializeField] private AudioClip _placeDownSound;
-    
+
     [SerializeField] private Vector3[] areaOfPlayPos;
 
     [SerializeField] private List<GameObject> _foodItems;
     [SerializeField] private List<GameObject> _customers;
-    private List<TripleServe_ItemClass> foodItems;
-    private List<TripleServeCustomerClass> customers;
+    private List<TripleServe_ItemClass> foodItems = new List<TripleServe_ItemClass>();
+    private List<TripleServeCustomerClass> customers = new List<TripleServeCustomerClass>();
 
     [SerializeField] private int stepDistanceMultiplyer = 1;
 
@@ -32,34 +33,45 @@ public class MinigameTripleServe : Minigame
     private bool isAtCustomer;
     private float timeToMove = 0.2f;
 
+    private int serveCounter;
+
     private string currentItemHeld;
 
     private List<string[]> listOfFoodVariations = new List<string[]>();
-    private string[] chosenVariation;
+    private string[] chosenVariation = new string[3];
 
-    // Start is called before the first frame update
-    void Start()
+    private string[] variationOne = new string[3] { "coffee", "bread", "cake" };
+    private string[] variationTwo = new string[3] { "bread", "cake", "coffee" };
+    private string[] variationThree = new string[3] { "cake", "coffee", "bread" };
+
+
+    private void Awake()
     {
-
-        string[] variationOne = new string[3] { "coffee", "bread", "cake" };
-        string[] variationTwo = new string[3] { "bread", "cake", "coffee" };
-        string[] variationThree = new string[3] { "cake", "coffee", "bread" };
 
         listOfFoodVariations.Add(variationOne);
         listOfFoodVariations.Add(variationTwo);
         listOfFoodVariations.Add(variationThree);
 
-        int itemIndex = Random.Range(0, 2);
+        int itemIndex = Random.Range(0, 3);
 
         chosenVariation = listOfFoodVariations[itemIndex];
 
+        serveCounter = 0;
+
+    }
+
+    // Start is called before the first frame update
+    protected override void Start()
+    {
+        base.Start();
+
         for (int i = 0; i < _foodItems.Count; i++)
         {
-            //foodItems.Add(_foodItems[i].GetComponent<TripleServe_ItemClass>());
+            foodItems.Add(_foodItems[i].GetComponent<TripleServe_ItemClass>());
         }
         for (int i = 0; i < _customers.Count; i++)
         {
-            //customers.Add(_customers[i].GetComponent<TripleServeCustomerClass>());
+            customers.Add(_customers[i].GetComponent<TripleServeCustomerClass>());
         }
 
         currentItemHeld = "none";
@@ -70,51 +82,64 @@ public class MinigameTripleServe : Minigame
     // Update is called once per frame
     void Update()
     {
+
+        //Debug.Log(isHoldingItem);
+        //Debug.Log(isAtItem);
+
+
         if (!isMoving) //gets inputs for movement
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow) && CanMove((Vector3.left * stepDistanceMultiplyer) + origPos))
+            if (Input.GetKeyDown(KeyCode.LeftArrow) && CanMove((Vector3.left * stepDistanceMultiplyer) + origPos) && player.transform.localPosition.y == 0)
                 StartCoroutine(MovePlayer(Vector3.left * stepDistanceMultiplyer));
 
             if (Input.GetKeyDown(KeyCode.UpArrow) && CanMove((Vector3.up * stepDistanceMultiplyer) + origPos))
                 StartCoroutine(MovePlayer(Vector3.up * stepDistanceMultiplyer));
 
-            if (Input.GetKeyDown(KeyCode.RightArrow) && CanMove((Vector3.right * stepDistanceMultiplyer) + origPos))
+            if (Input.GetKeyDown(KeyCode.RightArrow) && CanMove((Vector3.right * stepDistanceMultiplyer) + origPos) && player.transform.localPosition.y == 0)
                 StartCoroutine(MovePlayer(Vector3.right * stepDistanceMultiplyer));
 
             if (Input.GetKeyDown(KeyCode.DownArrow) && CanMove((Vector3.down * stepDistanceMultiplyer) + origPos))
                 StartCoroutine(MovePlayer(Vector3.down * stepDistanceMultiplyer));
+
             
-            if (!isHoldingItem)
+            IsAtItem();
+            if (isAtItem)
             {
-                //IsAtItem();
-                if (isAtItem)
-                {
-                    PickUpItem(player.transform.localPosition);
-                }
+                PickUpItem(player.transform.localPosition);
             }
+            
+            IsAtCustomer();
 
             if (isHoldingItem)
             {
-                IsAtCustomer();
                 if (isAtCustomer)
                 {
                     GiveItem(player.transform.localPosition);
                 }
             }
-        }      
+            
+            
+        }
     }
 
 
     private IEnumerator MovePlayer(Vector3 direction)
     {
 
-            isMoving = true;
+        isMoving = true;
 
-            float elapsedTime = 0;
+        float elapsedTime = 0;
 
-            origPos = player.transform.localPosition;
-            targetPos = origPos + direction;
+        origPos = player.transform.localPosition;
+        targetPos = origPos + direction;
 
+
+        if (targetPos.x > 300 || targetPos.x < -300 || targetPos.y > 300 || targetPos.y < -300)
+        {
+            isMoving = false;
+        }
+        else
+        {
             while (elapsedTime < timeToMove)
             {
                 player.transform.localPosition = Vector3.Lerp(origPos, targetPos, (elapsedTime / timeToMove));
@@ -123,18 +148,40 @@ public class MinigameTripleServe : Minigame
             }
 
             player.transform.localPosition = targetPos;
-
+            Debug.Log("player took a step to " + player.transform.localPosition);
             isMoving = false;
+        }
+
     }
 
 
     private bool CanMove(Vector3 pos)
     {
-        for (int i = 0; i < areaOfPlayPos.Length; i++) 
+        //Debug.Log(pos);
+        if (pos.x > 300 || pos.x < -300 || pos.y > 300 || pos.y < -300)
         {
-            if(areaOfPlayPos[i] != pos) return false;
+            //Debug.Log("cant move to" + pos);
+            return false;
         }
 
+        /*if(isAtItem || isAtCustomer)
+        {
+            if(pos.x != player.transform.localPosition.x)
+            {
+                return false;
+            }
+        }*/
+        
+        /*for (int i = 0; i < areaOfPlayPos.Length; i++)
+        {
+            //Debug.Log(areaOfPlayPos[i]);
+            //Debug.Log(pos);
+
+            if (areaOfPlayPos[i] == pos) return true;
+
+
+        }*/
+        //Debug.Log("moving to" + pos);
         /*
         for (int i = 0; i < foodItemPos.Length; i++)
         {
@@ -153,7 +200,7 @@ public class MinigameTripleServe : Minigame
     private void PickUpItem(Vector3 itemPos)
     {
         isHoldingItem = true;
-        
+
         for (int i = 0; i < foodItems.Count; i++)
         {
             if (itemPos == foodItems[i].GetItemPosition())
@@ -166,11 +213,15 @@ public class MinigameTripleServe : Minigame
 
     private void IsAtItem()
     {
-        for(int i = 0; i < foodItems.Count; i++)
+        
+        for (int i = 0; i < foodItems.Count; i++)
         {
-            if(player.transform.localPosition == foodItems[i].GetItemPosition())
+            Debug.Log(foodItems[i].GetItemPosition());
+            if (player.transform.localPosition == foodItems[i].GetItemPosition())
             {
+                
                 isAtItem = true;
+                return;
             }
         }
         isAtItem = false;
@@ -191,6 +242,7 @@ public class MinigameTripleServe : Minigame
             {
                 customers[i].SetServedStatus(true);
                 currentItemHeld = "none";
+                serveCounter++;
                 break;
             }
         }
@@ -204,6 +256,7 @@ public class MinigameTripleServe : Minigame
             if (player.transform.localPosition == customers[i].GetCustomerPosition())
             {
                 isAtCustomer = true;
+                return;
             }
         }
         isAtCustomer = false;
@@ -211,6 +264,7 @@ public class MinigameTripleServe : Minigame
 
     public string[] GetVariationArray()
     {
+        //Debug.Log(chosenVariation.Length);
         return chosenVariation;
     }
 

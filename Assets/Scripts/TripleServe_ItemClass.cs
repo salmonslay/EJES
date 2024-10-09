@@ -18,21 +18,32 @@ public class TripleServe_ItemClass : MonoBehaviour
     private Sprite itemSprite;
 
 
+    private void Awake()
+    {
+        gameObject.transform.localPosition = itemPosition;
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
 
         mg = gameObject.GetComponentInParent<MinigameTripleServe>();
 
-        gameObject.transform.localPosition = itemPosition;
+        
 
         //instead of a random item at all 3 spots, have one of each item at each spot getting positions from an array instead
 
         string[] itemArray = mg.GetVariationArray();
 
-        //itemName = itemArray[ARRAY_INDEX_CONSTANT];
+        for (int  i = 0;  i < itemArray.Length;  i++)
+        {
+            //Debug.Log(mg.GetVariationArray());
+        }
 
-        
+        itemName = itemArray[ARRAY_INDEX_CONSTANT];
+
+        //Debug.Log(itemName);
 
         if (itemName == "coffee")
         {
@@ -47,7 +58,7 @@ public class TripleServe_ItemClass : MonoBehaviour
             itemSprite = breadSprite;
         }
 
-        GetComponent<Image>().sprite = itemSprite;
+        gameObject.GetComponent<Image>().sprite = itemSprite;
 
     }
 

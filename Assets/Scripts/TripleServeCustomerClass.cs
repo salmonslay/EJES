@@ -14,6 +14,7 @@ public class TripleServeCustomerClass : MonoBehaviour
 
     private Sprite customerSprite;
     private Sprite orderSprite;
+    [SerializeField] private Sprite checkMark;
     private string orderName;
 
     private bool isServed;
@@ -21,13 +22,18 @@ public class TripleServeCustomerClass : MonoBehaviour
 
 
 
+    private void Awake()
+    {
+        gameObject.transform.localPosition = customerPosition;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
 
         mg = gameObject.GetComponentInParent<MinigameTripleServe>();
 
-        gameObject.transform.localPosition = customerPosition;
+        
 
         isServed = false;
         int itemIndex = Random.Range(0, 3);
@@ -42,7 +48,7 @@ public class TripleServeCustomerClass : MonoBehaviour
     {
         if (isServed && loopCheck < 1)
         {
-            statusImageObject.gameObject.GetComponent<Image>().sprite = mg._foodItemsSprites[3];
+            statusImageObject.gameObject.GetComponent<Image>().sprite = checkMark;
             loopCheck++;
         }
     }

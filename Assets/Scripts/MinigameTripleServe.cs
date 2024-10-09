@@ -16,9 +16,11 @@ public class MinigameTripleServe : Minigame
     [SerializeField] private AudioClip _placeDownSound;
     
     [SerializeField] private Vector3[] areaOfPlayPos;
-    //[SerializeField] private Vector3[] customerPos;
-    [SerializeField] private TripleServe_ItemClass[] foodItems;
-    [SerializeField] private TripleServeCustomerClass[] customers;
+
+    [SerializeField] private List<GameObject> _foodItems;
+    [SerializeField] private List<GameObject> _customers;
+    private List<TripleServe_ItemClass> foodItems;
+    private List<TripleServeCustomerClass> customers;
 
     [SerializeField] private int stepDistanceMultiplyer = 1;
 
@@ -26,6 +28,8 @@ public class MinigameTripleServe : Minigame
 
     private bool isMoving;
     private bool isHoldingItem;
+    private bool isAtItem;
+    private bool isAtCustomer;
     private float timeToMove = 0.2f;
 
     private string currentItemHeld;
@@ -49,6 +53,15 @@ public class MinigameTripleServe : Minigame
 
         chosenVariation = listOfFoodVariations[itemIndex];
 
+        for (int i = 0; i < _foodItems.Count; i++)
+        {
+            foodItems.Add(_foodItems[i].GetComponent<TripleServe_ItemClass>());
+        }
+        for (int i = 0; i < _customers.Count; i++)
+        {
+            customers.Add(_customers[i].GetComponent<TripleServeCustomerClass>());
+        }
+
         currentItemHeld = "none";
 
     }
@@ -57,7 +70,7 @@ public class MinigameTripleServe : Minigame
     // Update is called once per frame
     void Update()
     {
-        if (!isMoving)
+        if (!isMoving) //gets inputs for movement
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow) && CanMove((Vector3.left * stepDistanceMultiplyer) + origPos))
                 StartCoroutine(MovePlayer(Vector3.left * stepDistanceMultiplyer));
@@ -70,23 +83,25 @@ public class MinigameTripleServe : Minigame
 
             if (Input.GetKeyDown(KeyCode.DownArrow) && CanMove((Vector3.down * stepDistanceMultiplyer) + origPos))
                 StartCoroutine(MovePlayer(Vector3.down * stepDistanceMultiplyer));
-        }
-
-        if (!isHoldingItem) 
-        {
-            if (IsAtItem())
+            
+            if (!isHoldingItem)
             {
-                PickUpItem(player.transform.position);
+                IsAtItem();
+                if (isAtItem)
+                {
+                    PickUpItem(player.transform.position);
+                }
             }
-        }
 
-        if (isHoldingItem)
-        {
-            if (IsAtCustomer())
+            if (isHoldingItem)
             {
-                GiveItem(player.transform.position);
+                IsAtCustomer();
+                if (isAtCustomer)
+                {
+                    GiveItem(player.transform.position);
+                }
             }
-        }
+        }      
     }
 
 
@@ -139,7 +154,7 @@ public class MinigameTripleServe : Minigame
     {
         isHoldingItem = true;
         
-        for (int i = 0; i < foodItems.Length; i++)
+        for (int i = 0; i < foodItems.Count; i++)
         {
             if (itemPos == foodItems[i].GetItemPosition())
             {
@@ -147,48 +162,51 @@ public class MinigameTripleServe : Minigame
                 break;
             }
         }
-
-
     }
 
-    private bool IsAtItem()
+    private void IsAtItem()
     {
-        for(int i = 0; i < foodItems.Length; i++)
+        for(int i = 0; i < foodItems.Count; i++)
         {
             if(player.transform.position == foodItems[i].GetItemPosition())
             {
-                return true;
+                isAtItem = true;
             }
         }
-        return false;
+        isAtItem = false;
     }
 
     //maybe make the "IsAtCustomer" method a bool variable and handle return the customer order info instead
     //same can be done for the items
 
-    private bool IsAtCustomer() //need to edit later
-    {
-        for (int i = 0; i < customers.Length; i++)
-        {
-            if (player.transform.position == customers[i].GetItemPosition())
-            {
-                return true;
-            }
-        }
-        return false;
-
-    }
-
     private void GiveItem(Vector3 customerPos)
     {
-        for (int i = 0; i < foodItems.Length; i++)
+        isHoldingItem = false;
+
+        string currentCustomerOrder = string.Empty;
+
+        for (int i = 0; i < customers.Count; i++)
         {
-            if (customerPos == foodItems[i].GetItemPosition())
+            if (customerPos == customers[i].GetCustomerPosition() && !customers[i].IsServed() && customers[i].GetOrderName() == currentItemHeld)
             {
-                currentItemHeld = foodItems[i].GetItemName();
+                customers[i].SetServedStatus(true);
+                currentItemHeld = "none";
                 break;
             }
         }
+    }
+
+
+    private void IsAtCustomer() //need to edit later
+    {
+        for (int i = 0; i < customers.Count; i++)
+        {
+            if (player.transform.position == customers[i].GetCustomerPosition())
+            {
+                isAtCustomer = true;
+            }
+        }
+        isAtCustomer = false;
     }
 
     public string[] GetVariationArray()

@@ -13,7 +13,6 @@ public class TripleServe_ItemClass : MonoBehaviour
 
     private Sprite coffeeSprite, cakeSprite, breadSprite;
     private string itemName;
-    private bool isTaken;
 
     private Sprite itemSprite;
 
@@ -21,8 +20,6 @@ public class TripleServe_ItemClass : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        isTaken = false;
         gameObject.transform.position = itemPosition;
 
         //instead of a random item at all 3 spots, have one of each item at each spot getting positions from an array instead

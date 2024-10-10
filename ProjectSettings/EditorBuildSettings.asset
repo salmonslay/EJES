@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MinigameExample.unity
     guid: 1f35c7f62f78d3e4e82213ae4916d42b
+  - enabled: 1
+    path: Assets/Scenes/MinigameGrindCoffee.unity
+    guid: 507a72d9add513245b31cb7551663fa4
+  - enabled: 1
+    path: Assets/Scenes/MinigameTripleServe.unity
+    guid: 53029da1f3e37f54fbcecbcf7d0f9b00
   m_configObjects: {}

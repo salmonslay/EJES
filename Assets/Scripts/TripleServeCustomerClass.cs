@@ -25,6 +25,7 @@ public class TripleServeCustomerClass : MonoBehaviour
     private void Awake()
     {
         //gameObject.transform.localPosition = customerPosition;
+        
     }
 
     // Start is called before the first frame update
@@ -49,6 +50,7 @@ public class TripleServeCustomerClass : MonoBehaviour
         if (isServed && loopCheck < 1)
         {
             statusImageObject.gameObject.GetComponent<Image>().sprite = checkMark;
+            statusImageObject.GetComponentInChildren<ParticleSystem>().Play();
             loopCheck++;
         }
     }

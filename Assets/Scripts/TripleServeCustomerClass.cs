@@ -24,7 +24,7 @@ public class TripleServeCustomerClass : MonoBehaviour
 
     private void Awake()
     {
-        gameObject.transform.localPosition = customerPosition;
+        //gameObject.transform.localPosition = customerPosition;
     }
 
     // Start is called before the first frame update
@@ -39,7 +39,7 @@ public class TripleServeCustomerClass : MonoBehaviour
         int itemIndex = Random.Range(0, 3);
         orderSprite = mg._foodItemsSprites[itemIndex];
         orderName = mg._foodItemsNames[itemIndex];
-        GetComponent<Image>().sprite = customerSprite;
+        //GetComponent<Image>().sprite = customerSprite;
         statusImageObject.gameObject.GetComponent<Image>().sprite = orderSprite;
     }
 

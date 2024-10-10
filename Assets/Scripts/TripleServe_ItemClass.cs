@@ -20,7 +20,7 @@ public class TripleServe_ItemClass : MonoBehaviour
 
     private void Awake()
     {
-        gameObject.transform.localPosition = itemPosition;
+        //gameObject.transform.localPosition = itemPosition;
     }
 
 

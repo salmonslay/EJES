@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
+using UnityEditor.UI;
+using UnityEngine.UI;
 
 public class MinigameTripleServe : Minigame
 {
@@ -9,6 +11,7 @@ public class MinigameTripleServe : Minigame
     protected override string MinigameName => "Serve your guests";
 
     [SerializeField] private GameObject player;
+    [SerializeField] private GameObject playerItem;
 
     [SerializeField] public Sprite[] _foodItemsSprites;
     [SerializeField] public string[] _foodItemsNames; //ska vara i samma ordning some "_foodItemsSprites" och
@@ -26,6 +29,8 @@ public class MinigameTripleServe : Minigame
     [SerializeField] private int stepDistanceMultiplyer = 1;
 
     private Vector3 origPos, targetPos;
+
+    private AudioSource audioSource;
 
     private bool isMoving;
     private bool isHoldingItem;
@@ -58,6 +63,12 @@ public class MinigameTripleServe : Minigame
 
         serveCounter = 0;
 
+        currentItemHeld = "none";
+
+        playerItem.SetActive(false);
+
+        audioSource = player.GetComponent<AudioSource>();
+
     }
 
     // Start is called before the first frame update
@@ -74,7 +85,7 @@ public class MinigameTripleServe : Minigame
             customers.Add(_customers[i].GetComponent<TripleServeCustomerClass>());
         }
 
-        currentItemHeld = "none";
+        //currentItemHeld = "none";
 
     }
 
@@ -203,10 +214,29 @@ public class MinigameTripleServe : Minigame
 
         for (int i = 0; i < foodItems.Count; i++)
         {
-            if (itemPos == foodItems[i].GetItemPosition())
+            if (itemPos == foodItems[i].GetItemPosition() && currentItemHeld != foodItems[i].GetItemName())
             {
                 currentItemHeld = foodItems[i].GetItemName();
-                break;
+
+                playerItem.SetActive(true);
+
+                if (currentItemHeld == "coffee")
+                {
+                    playerItem.GetComponent<Image>().sprite = _foodItemsSprites[2];
+                }
+                if (currentItemHeld == "cake")
+                {
+                    playerItem.GetComponent<Image>().sprite = _foodItemsSprites[1];
+                }
+                if (currentItemHeld == "bread")
+                {
+                    playerItem.GetComponent<Image>().sprite = _foodItemsSprites[0]; 
+                }
+
+                audioSource.clip = _pickUpSound;
+                audioSource.Play();
+
+                return;
             }
         }
     }
@@ -242,8 +272,17 @@ public class MinigameTripleServe : Minigame
             {
                 customers[i].SetServedStatus(true);
                 currentItemHeld = "none";
+                playerItem.SetActive(false);
                 serveCounter++;
-                break;
+                audioSource.clip = _placeDownSound;
+                audioSource.Play();
+
+                if(serveCounter >= 3)
+                {
+                    EndMinigame(true);
+                }
+
+                return;
             }
         }
     }

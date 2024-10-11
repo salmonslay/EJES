@@ -82,7 +82,7 @@ public class MinigameBakePull : Minigame
 
             if(sliderPos >= rangeUpper)
             {
-                EndMinigame();
+                EndMinigame(false);
             }
         }
         

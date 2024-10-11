@@ -48,7 +48,7 @@ public class MinigameBakePull : Minigame
             dificultyMultiplyer -= loopCounter*0.05f;
         }
         rangeLower = Random.Range(125, 325);
-        rangeUpper = rangeLower + (30 * dificultyMultiplyer);
+        rangeUpper = rangeLower + (20 * dificultyMultiplyer);
         loopCounter++;
 
         //Debug.Log("World: " + ovenNeedle.transform.position);
@@ -58,7 +58,7 @@ public class MinigameBakePull : Minigame
 
         markerRect.transform.localPosition = new Vector3(rangeLower -200, 0, 0);
         
-        markerRect.sizeDelta = new Vector2(30 * dificultyMultiplyer, 22); //22 is the constant height of the marker
+        markerRect.sizeDelta = new Vector2(20 * dificultyMultiplyer, 22); //22 is the constant height of the marker
 
         Debug.Log(marker.transform.localPosition);
 
@@ -71,10 +71,11 @@ public class MinigameBakePull : Minigame
     // Update is called once per frame
     void Update()
     {
-        MoveNeedle();
+        
         //Debug.Log("lower coords:" + rangeLower);
         if (IsRunning)
         {
+            MoveNeedle();
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
                 CheckPullTiming();
@@ -118,7 +119,7 @@ public class MinigameBakePull : Minigame
     private void MoveNeedle()
     {
 
-        sliderPos += Time.deltaTime * (2 - dificultyMultiplyer) * 70;
+        sliderPos += Time.deltaTime * (2 - dificultyMultiplyer) * 90;
 
         slider.GetComponent<UnityEngine.UI.Slider>().value = sliderPos;
 

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class MinigameTripleServe : Minigame
 {
-    protected override float MinigameTime => GameManager.Instance ? GameManager.Instance.MinigameTime * 0.7f : 5f;
+    protected override float MinigameTime => GameManager.Instance ? GameManager.Instance.MinigameTime : 5f;
     protected override string MinigameName => "Serve your guests";
 
     [SerializeField] private GameObject player;

@@ -15,7 +15,7 @@ public class MinigameGrindCoffee : Minigame
     private int _index;
     private KeyCode[] _orderBase = {KeyCode.LeftArrow, KeyCode.UpArrow, KeyCode.RightArrow, KeyCode.DownArrow};
     private KeyCode[] _order;
-    [SerializeField] private int _clicksToComplete = 40;
+    [SerializeField] private int _clicksToComplete = 25;
     private int _clicks;
 
     private void Start()

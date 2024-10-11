@@ -47,9 +47,8 @@ public class Timer : MonoBehaviour
             if (_bar)
                 _bar.fillAmount = 0; // unsure if fillAmount clamps itself or not
 
-            // if (GameManager.Instance)
-            //     GameManager.Instance.CurrentMinigame?.EndMinigame(false);
-            // TODO 07/10: END MINIGAME
+            if (GameManager.Instance)
+                GameManager.Instance.CurrentMinigame?.EndMinigame(false);
         }
     }
 }

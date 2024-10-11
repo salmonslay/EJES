@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -34,6 +35,9 @@ public class GameManager : MonoBehaviour
     public int TotalLevels => PassedLevels + FailedLevels;
     private bool _isWaitingForRestart = false;
 
+    public Canvas overlayCanvas;
+    public Text canvasText;
+
     private void Awake()
     {
         if (Instance != null)
@@ -45,6 +49,8 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         Cursor.visible = false;
+
+        overlayCanvas.gameObject.SetActive(!_isDebugManager);
     }
 
     private void Update()
@@ -104,7 +110,7 @@ public class GameManager : MonoBehaviour
         Debug.Log($"started loading {sceneName}");
 
         if (state != TransitionState.New) // we came from a minigame
-        {
+        {   
             CurrentMinigame.TargetMusicVolume = 0f; // mute the old game
 
             yield return new WaitForSecondsRealtime(0.5f);
@@ -114,6 +120,8 @@ public class GameManager : MonoBehaviour
 
         if (FailedLevels < 3) // check if we're still alive (maybe change condition?)
         {
+            canvasText.text = $"{3 - FailedLevels} lives left!\n{PassedLevels} levels passed.";
+            overlayCanvas.gameObject.SetActive(true);
             while (!asyncLoad.isDone)
             {
                 // Check if the load has finished
@@ -121,7 +129,8 @@ public class GameManager : MonoBehaviour
                 {
                     asyncLoad.allowSceneActivation = true;
                     // remove overlay/loading screen
-                    yield return new WaitForSeconds(0.1f);
+                    yield return new WaitForSeconds(1f);
+                    overlayCanvas.gameObject.SetActive(false);
                     CurrentMinigame.StartMinigame();
                 }
 
@@ -131,7 +140,8 @@ public class GameManager : MonoBehaviour
         else
         {
             // lose
-            Debug.Log("You lost the game");
+            overlayCanvas.gameObject.SetActive(true);
+            canvasText.text = $"You lost!\n{PassedLevels} levels passed.";
             _isWaitingForRestart = true;
         }
     }

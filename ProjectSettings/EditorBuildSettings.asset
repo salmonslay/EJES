@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MinigameGrindCoffee.unity
     guid: 507a72d9add513245b31cb7551663fa4
   - enabled: 1
+    path: Assets/Scenes/MinigameBakePull.unity
+    guid: a40d4113da2a5814580284582e9a0a16
+  - enabled: 1
     path: Assets/Scenes/MinigameTripleServe.unity
     guid: 53029da1f3e37f54fbcecbcf7d0f9b00
   m_configObjects: {}

@@ -361,6 +361,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6243895067894913178, guid: a42163fb520b90d49b78ae29dc97cd23, type: 3}
+      propertyPath: _minigameSceneNames.Array.data[0]
+      value: MinigameBakePull
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243895067894913178, guid: a42163fb520b90d49b78ae29dc97cd23, type: 3}
       propertyPath: _minigameSceneNames.Array.data[1]
       value: MinigameGrindCoffee
       objectReference: {fileID: 0}

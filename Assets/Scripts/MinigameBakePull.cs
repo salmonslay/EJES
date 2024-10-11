@@ -40,23 +40,25 @@ public class MinigameBakePull : Minigame
     // Start is called before the first frame update
     void Start()
     {
+        base.Start();
+
         Debug.Log(marker.transform.localPosition);
         if (loopCounter > 0)
         {
             dificultyMultiplyer -= loopCounter*0.05f;
         }
         rangeLower = Random.Range(125, 325);
-        rangeUpper = rangeLower + (50 * dificultyMultiplyer);
+        rangeUpper = rangeLower + (30 * dificultyMultiplyer);
         loopCounter++;
 
-        Debug.Log("World: " + ovenNeedle.transform.position);
-        Debug.Log("Local: " + ovenNeedle.transform.localPosition);
+        //Debug.Log("World: " + ovenNeedle.transform.position);
+        //Debug.Log("Local: " + ovenNeedle.transform.localPosition);
 
         RectTransform markerRect = marker.GetComponent<RectTransform>();
 
         markerRect.transform.localPosition = new Vector3(rangeLower -200, 0, 0);
         
-        markerRect.sizeDelta = new Vector2(50 * dificultyMultiplyer, 22); //22 is the constant height of the marker
+        markerRect.sizeDelta = new Vector2(30 * dificultyMultiplyer, 22); //22 is the constant height of the marker
 
         Debug.Log(marker.transform.localPosition);
 
@@ -77,14 +79,23 @@ public class MinigameBakePull : Minigame
             {
                 CheckPullTiming();
             }
+
+            if(sliderPos >= rangeUpper)
+            {
+                EndMinigame();
+            }
         }
         
     }
 
     private void CheckPullTiming() //determines if you pulled it on time 
     {
-        if (IsWithinRange(ovenNeedle.transform.localPosition.x))
+        Debug.Log("pulled at: " + sliderPos);
+        Debug.Log(IsWithinRange(sliderPos));
+        Debug.Log("Lower: " + rangeLower + " Upper: " + rangeUpper);
+        if (IsWithinRange(sliderPos))
         {
+            
             EndMinigame(true);
         }
         else
@@ -95,6 +106,7 @@ public class MinigameBakePull : Minigame
 
     private bool IsWithinRange(float value) //determines if the range is correct
     {
+        Debug.Log(value);
         if(value > rangeLower && value < rangeUpper)
         {
             return true;
@@ -106,9 +118,11 @@ public class MinigameBakePull : Minigame
     private void MoveNeedle()
     {
 
-        sliderPos = Mathf.Lerp(sliderPos, 400, Time.deltaTime);
+        sliderPos += Time.deltaTime * (2 - dificultyMultiplyer) * 70;
 
-        Debug.Log(sliderPos);
+        slider.GetComponent<UnityEngine.UI.Slider>().value = sliderPos;
+
+        //Debug.Log(sliderPos);
         
 
     }

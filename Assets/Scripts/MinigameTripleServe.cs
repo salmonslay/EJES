@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
-using UnityEditor.UI;
+//using static UnityEditor.PlayerSettings;
+//using UnityEditor.UI;
 using UnityEngine.UI;
 
 public class MinigameTripleServe : Minigame
